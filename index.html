@@ -81,6 +81,38 @@
         </ul>
         <p><a href="https://iamakimmer.github.io/csci-e65g-final-ios-game/">This page is loaded from this github repo.</a></p>
         
+
+        <h2>Notable Design Choices</h2>
+
+        <ul>
+          <li>History of matches are stored in firebase and loaded into the tables.</li>
+          <li>Singletons are not used as notifications as notifications are being passed in with data</li>
+          <li>The history is refering it's own firebase reference, however after looking at the source code and documentation the firebase reference is cached so there is no additional overhead. Details:
+
+            <code>
+                /*<br/>
+                this is referencing a cached copy - indicating in the docs<br/>
+                /**<br/>
+                * Creates, caches, and returns a `FIRFirestore` using the default `FIRApp`. Each subsequent<br/>
+                * invocation returns the same `FIRFirestore` object.<br/>
+                *<br/>
+                * @return The `FIRFirestore` instance.<br/>
+                */<br/>
+                + (instancetype)firestore NS_SWIFT_NAME(firestore());<br/>
+                <br />              
+                source code is @ https://github.com/firebase/firebase-ios-sdk/tree/master/Firestore/Source/API<br />              
+               */<br />              
+               private let _db: Firestore = {<br />              
+                   let db: Firestore = Firestore.firestore()<br />              
+                   return db        <br />              
+               }()              <br />              
+            </code>            
+          </li>
+          
+        </ul>
+
+
+
         <h2>Limitations</h2>
 
         <ul>

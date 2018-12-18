@@ -1,8 +1,99 @@
 <html>
   <head>
     <title>csci final ios game</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
   </head>
   <body>
-    <h1>todo: this page is loading from the web @ <a href="https://iamakimmer.github.io/csci-e65g-final-ios-game/">https://iamakimmer.github.io/csci-e65g-final-ios-game/</a></h1>
+    <div class="container">
+        <h1>CSCI E65g: Mobile Application Development Using Swift and iOS</h1>
+
+        <section class="jumbotron text-center">
+            <div class="container">
+              <h1 class="jumbotron-heading">SwiftMemory</h1>
+              <i class="lead text-muted">This is a 2 player memory game run over the network.</i>
+              <p>
+                <a href="#howtoplay" class="btn btn-primary my-2">How to play</a>
+              </p >
+            </div>
+        </section>
+        <p>This table below describes lists every notification: </p>
+        <table class="table">
+          <thead>
+            <tr>          
+              <th>Notification</th>
+              <th>Is Sent When</th>
+              <th>Listener</th>
+              <th>Listener Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>.playerNameRequested</td>
+              <td>User Changes Name (GamePreferencesController)</td>
+              <td>MinimalFirebaseProxy.playerNameRequested</td>
+              <td>Send name to firebase</td>
+            </tr>
+            <tr>
+              <td>.waitingForUserMove<br/>.waitingForOpponentMove</td>
+              <td>Move is received (GameModel)</td>
+              <td>GameViewController</td>
+              <td>Update State Machine, start timer or listen to opponent</td>
+            </tr>
+            <tr>
+              <td>.gameOver</td>
+              <td>Game is over (GameViewController)</td>
+              <td>HistoryModel.gameOver</td>
+              <td>Save match to firebase history</td>
+            </tr>
+            <tr>
+              <td>.moveReceived</td>
+              <td>Move received from Firebase (MinimalFirebaseProxy)</td>
+              <td>GameModel.moveReceived</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>.startTimeReceived</td>
+              <td>Firebase receives game start time (MinimalFirebaseProxy)</td>
+              <td>GameViewController.startTimeReceived</td>
+              <td>Display instructions for 5 seconds</td>
+            </tr>          
+            <tr>
+                <td>.playerNameChanged</td>
+                <td>Firebase receives new player name (MinimalFirebaseProxy)</td>
+                <td>GamePrefsModel.playerNameChanged</td>
+                <td>Change Player Name</td>
+            </tr>          
+            <tr>
+                <td>.restoreGame</td>
+                <td>Firebase receives new game from player 1 (MinimalFirebaseProxy)</td>
+                <td>GameModel.restoreGame</td>
+                <td>Reset current game and restore new game</td>
+            </tr>     
+          </tbody>
+        </table>
+        <h2><a name="howtoplay"></a>How To Play</h2>
+        <ul>
+          <li>Players decide who is Player 1 or Player 2 offline. Player 2 launches the app and assigns himself Player to in the Preferences tab.</li>
+          <li>Player 1 launches the game and taps New Game</li>
+          <li>Both players are shown green tiles for only 5 seconds</li>
+          <li>After 5 seconds, the game has started. Players will take turns attempting to tap on the green tiles.</li>
+          <li>After 10 turns, the player with the most matching green tiles wins!</li>
+        </ul>
+        <p><a href="https://iamakimmer.github.io/csci-e65g-final-ios-game/">This page is loaded from this github repo.</a></p>
+        
+        <h2>Limitations</h2>
+
+        <ul>
+          <li>Player 1 is the main user and must start a game. Player 2 listens for an incoming game. This was part of the requirement.</li>
+          <li>The entire game is stored on the network and local storage is not really used as it always retrieves data from Firebase.</li>                    
+        </ul>
+
+        <h2>Future Development</h2>
+        <ul>
+          <li>Automatic Matchmaking - Ability to play a game without assigning player 1 or 2</li>
+          <li>Unlimited number of devices playing games. The firebase data is currently set up for this but logic needs to be developed to join open matches.</li>
+          <li>Show matching green tiles after the game is over.</li>
+        </ul>
+    </div>    
   </body>
 </html>
